@@ -4,11 +4,13 @@ const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
 
+// Get names of all movies
 router.get('/', async (req, res) => {
   const movies = await Movie.find().sort('name');
   res.send(movies);
 });
 
+// Create new movie
 router.post('/', async (req, res) => {
   const { error } = validate(req.body); 
   if (error) return res.status(400).send(error.details[0].message);
@@ -30,6 +32,7 @@ router.post('/', async (req, res) => {
   res.send(movie);
 });
 
+// Update movie details
 router.put('/:id', async (req, res) => {
   const { error } = validate(req.body); 
   if (error) return res.status(400).send(error.details[0].message);
@@ -53,6 +56,7 @@ router.put('/:id', async (req, res) => {
   res.send(movie);
 });
 
+// Delete a movie
 router.delete('/:id', async (req, res) => {
   const movie = await Movie.findByIdAndRemove(req.params.id);
 
@@ -61,6 +65,7 @@ router.delete('/:id', async (req, res) => {
   res.send(movie);
 });
 
+// Return a specific movie
 router.get('/:id', async (req, res) => {
   const movie = await Movie.findById(req.params.id);
 

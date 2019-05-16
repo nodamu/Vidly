@@ -5,11 +5,20 @@ const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
 
+
+// Get all genres
 router.get('/', async (req, res) => {
-  const genres = await Genre.find().sort('name');
-  res.send(genres);
+  try {
+    const genres = await Genre.find().sort('name');
+    res.send(genres);
+  } catch (error) {
+      res.status(500).send('Could not fetch genres');
+  }
+  
 });
 
+
+// Create a new genre
 router.post('/', auth, async (req, res) => {
   const { error } = validate(req.body); 
   if (error) return res.status(400).send(error.details[0].message);
@@ -20,6 +29,7 @@ router.post('/', auth, async (req, res) => {
   res.send(genre);
 });
 
+// Update a genre
 router.put('/:id', async (req, res) => {
   const { error } = validate(req.body); 
   if (error) return res.status(400).send(error.details[0].message);
@@ -33,6 +43,7 @@ router.put('/:id', async (req, res) => {
   res.send(genre);
 });
 
+// Remove a genre 
 router.delete('/:id', [auth, admin], async (req, res) => {
   const genre = await Genre.findByIdAndRemove(req.params.id);
 
@@ -41,6 +52,7 @@ router.delete('/:id', [auth, admin], async (req, res) => {
   res.send(genre);
 });
 
+// Get a particular genre
 router.get('/:id', async (req, res) => {
   const genre = await Genre.findById(req.params.id);
 

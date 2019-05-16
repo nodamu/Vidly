@@ -8,11 +8,13 @@ const router = express.Router();
 
 Fawn.init(mongoose);
 
+// Get rentals ordered by dateOut
 router.get('/', async (req, res) => {
   const rentals = await Rental.find().sort('-dateOut');
   res.send(rentals);
 });
 
+//  Rent a movie
 router.post('/', async (req, res) => {
   const { error } = validate(req.body); 
   if (error) return res.status(400).send(error.details[0].message);
@@ -38,6 +40,8 @@ router.post('/', async (req, res) => {
     }
   });
 
+  // Rental transaction
+  // Renting a new movie decreases the number of movies in stock 
   try {
     new Fawn.Task()
       .save('rentals', rental)
@@ -53,6 +57,8 @@ router.post('/', async (req, res) => {
   }
 });
 
+
+// Get a rental with id specified in request body
 router.get('/:id', async (req, res) => {
   const rental = await Rental.findById(req.params.id);
 
