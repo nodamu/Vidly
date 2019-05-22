@@ -7,7 +7,6 @@ const genresController = require('../controllers/genresController');
 // Get all genres
 router.get('/',genresController.getAllGenres);
 
-
 // Create a new genre
 router.post('/', auth, genresController.createNewGenre);
 
