@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const movieController = require('../controllers/moviesController')
+const movieController = require('../controllers/moviesController');
+const auth = require('../middleware/auth');
+const admin = require('../middleware/admin');
+
 // Get names of all movies
 router.get('/',movieController.createMovie );
 

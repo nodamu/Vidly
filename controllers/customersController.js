@@ -1,6 +1,4 @@
 const { Customer, validate } = require('../models/customer');
-const auth = require('../middleware/auth');
-const admin = require('../middleware/admin');
 
 exports.getCustomerList = async function (req, res) {
     const customers = await Customer.find().sort('name');
