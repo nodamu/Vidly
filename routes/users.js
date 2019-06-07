@@ -5,7 +5,7 @@ const auth = require('../middleware/auth');
 
 
 // Return Users
-router.get('/me', auth, usersController.getUsers);
+router.get('/me', auth, usersController.getUser);
 
 // Register new User
 router.post('/', usersController.registerUser);

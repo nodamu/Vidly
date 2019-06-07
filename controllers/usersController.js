@@ -3,7 +3,7 @@ const _ = require('lodash');
 const { User, validate } = require('../models/user');
 
 
-exports.getUsers = async (req, res) => {
+exports.getUser = async (req, res) => {
     const user = await User.findById(req.user._id).select('-password');
     res.send(user);
 }
